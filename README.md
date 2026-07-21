@@ -1,6 +1,6 @@
 # Proyecto IA Terminal
 
-![Banner del Proyecto](".img/Istantanea_2026-07-21_19-09-51.png")
+![Banner del Proyecto]("img/Istantanea_2026-07-21_19-09-51.png")
 
 Este proyecto es algo sencillo que cualquiera puede hacer. La idea es realizar una pregunta rápida a la IA directamente desde la terminal y obtener una respuesta veloz *(¡seguimos trabajando en optimizar esos milisegundos!)*.
 
@@ -49,7 +49,3 @@ Puedes ajustar la personalidad, el tono, el formato o las reglas del modelo modi
 ---
 
 *Nota: Ojalá al que lea esto le salga un error inesperado en la distro... y que tenga que reinstalar el sistema.* 🐧🔥
-
-```
-
-```
