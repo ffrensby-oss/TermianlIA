@@ -1,2 +1,2 @@
 #!/bin/bash
-"/home/frensby/Developer/Github/TermianlIA/.venv/bin/python" "/home/frensby/Developer/Github/TermianlIA/src/main.py" "$@"
+"ruta completa al entorno virtual" "ruta al main.py" "$@"
