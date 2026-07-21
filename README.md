@@ -13,7 +13,7 @@ Sigue estos pasos para dejar el script listo y accesible desde cualquier directo
 1. **Configurar la API Key:**  
    Define tu clave de API exportando la variable de entorno `GEMINI_API_KEY` (puedes agregarlo a tu `~/.bashrc` o `~/.zshrc`):
    ```bash
-   export GEMINI_API_KEY="tu_api_key_aqui"```
+   export GEMINI_API_KEY="tu_api_key_aqui"
 
 
 2. **Ajustar rutas:**
