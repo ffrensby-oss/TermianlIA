@@ -7,6 +7,8 @@ from rich import print
 from rich.panel import Panel
 from rich.live import Live
 from rich.markdown import Markdown
+from tools_registry import TOOLS
+from tools_registry import FUNCTIONS
 
 # Obtención del contexto más ligera
 def obtener_contexto_sistema() -> str:
@@ -34,7 +36,7 @@ def generate():
     client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
     prompt_usuario = " ".join(sys.argv[1:])
 
-    model = "gemma-4-26b-a4b-it"
+    model = "gemma-4-31b-it"
     contents = [
         types.Content(
             role="user",
@@ -43,19 +45,15 @@ def generate():
             ],
         ),
     ]
-    tools = [
-        types.Tool(googleSearch=types.GoogleSearch()),
-    ]
+    
     generate_content_config = types.GenerateContentConfig(
         thinking_config=types.ThinkingConfig(
             thinking_level="MINIMAL",
         ),
-        tools=tools,
+        tools=TOOLS,
         system_instruction = f"""
         [OBJETIVO Y ENTORNO]
         El objetivo principal de esta herramienta es servir como un asistente de terminal avanzado para un sistema Linux.
-        Información detallada de la máquina detectada:
-        {obtener_contexto_sistema()}
 
         [PERSONALIDAD Y TONO]
         - TONO PRINCIPAL: Confianza absoluta, seguridad, ironía y sarcasmo.
@@ -72,7 +70,59 @@ def generate():
         )
 
     texto_acumulado = ""
-    
+    response = client.models.generate_content(
+        model=model,
+        contents=contents,
+        config=generate_content_config
+    )
+
+    candidate = response.candidates[0]
+
+    function_response_parts = []
+
+    for part in candidate.content.parts:
+
+        if part.function_call:
+
+            function_name = part.function_call.name
+            args = dict(part.function_call.args)
+
+            print(
+                f"[yellow]Ejecutando:[/yellow] {function_name} {args}"
+            )
+
+            result = FUNCTIONS[function_name](**args)
+
+            print(
+                f"[green]Resultado:[/green]\n{result}"
+            )
+
+            function_response_parts.append(
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={
+                        "result": result
+                    }
+                )
+            )
+
+
+    # Si hubo herramientas, devolver el resultado a Gemini
+
+    if function_response_parts:
+
+        contents.append(
+            candidate.content
+        )
+
+        contents.append(
+            types.Content(
+                role="user",
+                parts=function_response_parts
+            )
+        )
+
+
     # Live con refresh adecuado para renderizar cada chunk conforme llega
     with Live(Panel("", title="Respuesta"), refresh_per_second=15, auto_refresh=True) as live:
         # Usamos generate_content_stream en lugar de generate_content
