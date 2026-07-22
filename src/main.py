@@ -131,8 +131,8 @@ def parse_args():
         description="Asistente de terminal con memoria persistente."
     )
     parser.add_argument("prompt", nargs="*", help="Consulta para el asistente")
-    parser.add_argument("--clear-memory", action="store_true", help="Borra la memoria guardada y sale")
-    parser.add_argument("--no-memory", action="store_true", help="Ignora la memoria en esta ejecución")
+    parser.add_argument("--cm", action="store_true", help="Borra la memoria guardada y sale")
+    parser.add_argument("--nm", action="store_true", help="Ignora la memoria en esta ejecución")
     return parser.parse_args()
 
 
