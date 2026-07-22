@@ -22,7 +22,7 @@ from tools_registry import FUNCTIONS
 # ---------------------------------------------------------------------------
 MEMORY_FILE = Path(os.environ.get("ASSISTANT_MEMORY_FILE", Path.home() / ".terminal_assistant_memory.json"))
 MAX_MEMORY_TURNS = 12          # nº de intercambios (usuario+modelo) que se conservan
-MAX_TOOL_ITERATIONS = 6        # evita loops infinitos de function-calling
+MAX_TOOL_ITERATIONS = 200        # evita loops infinitos de function-calling
 MODEL = os.environ.get("GEMINI_MODEL", "gemma-4-31b-it")  # ajusta según los modelos disponibles en tu API key
 
 
@@ -131,8 +131,8 @@ def parse_args():
         description="Asistente de terminal con memoria persistente."
     )
     parser.add_argument("prompt", nargs="*", help="Consulta para el asistente")
-    parser.add_argument("--cm", action="store_true", help="Borra la memoria guardada y sale")
-    parser.add_argument("--nm", action="store_true", help="Ignora la memoria en esta ejecución")
+    parser.add_argument("--clear_memory", action="store_true", help="Borra la memoria guardada y sale")
+    parser.add_argument("--no-memory", action="store_true", help="Ignora la memoria en esta ejecución")
     return parser.parse_args()
 
 
