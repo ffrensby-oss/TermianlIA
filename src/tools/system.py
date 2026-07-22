@@ -1,5 +1,6 @@
 import platform
 import os
+import subprocess
 
 def system_info() -> str:
     cmd = r"""
@@ -12,7 +13,5 @@ def system_info() -> str:
 
     echo "Host: $USER@$HOSTNAME | SO: $OS ($KERNEL) | CPU: $CPU ($CORES núcleos) | RAM: $RAM | Disco /: $DISCO"
     """
-    try:
-        return subprocess.check_output(cmd, shell=True, text=True, executable='/bin/bash').strip()
-    except Exception:
-        return "Info del sistema no disponible"
+    
+    return subprocess.check_output(cmd, shell=True, text=True, executable='/bin/bash').strip()
