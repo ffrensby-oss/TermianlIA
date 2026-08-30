@@ -1,2 +1,9 @@
 #!/bin/bash
-"ruta completa al entorno virtual" "ruta al main.py" "$@"
+
+# Si el primer argumento es --configure, ejecuta el script src/configure.py y si no ejecuta el script src/main.py
+if [ "$1" == "--configure" ]; then
+    /home/frensby/Developer/Github/TermianlIA/.venv/bin/python /home/frensby/Developer/Github/TermianlIA/src/configure.py 
+else    
+    /home/frensby/Developer/Github/TermianlIA/.venv/bin/python /home/frensby/Developer/Github/TermianlIA/src/main.py "$@" 
+fi
+

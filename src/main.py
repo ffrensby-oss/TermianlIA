@@ -20,10 +20,21 @@ from tools_registry import FUNCTIONS
 # ---------------------------------------------------------------------------
 # Configuración
 # ---------------------------------------------------------------------------
+
+
+# Cargar archivo de configuración JSON
+config_path = Path(__file__).parent / "config.json"
+if not config_path.exists():
+    print(f"[bold red]Error:[/bold red] No se encontró el archivo de configuración: {config_path}")
+    sys.exit(1)
+
+with open(config_path, "r") as f:
+    config = json.load(f)
+
 MEMORY_FILE = Path(os.environ.get("ASSISTANT_MEMORY_FILE", Path.home() / ".terminal_assistant_memory.json"))
 MAX_MEMORY_TURNS = 12          # nº de intercambios (usuario+modelo) que se conservan
 MAX_TOOL_ITERATIONS = 200        # evita loops infinitos de function-calling
-MODEL = os.environ.get("GEMINI_MODEL", "gemma-4-31b-it")  # ajusta según los modelos disponibles en tu API key
+MODEL = config["model"]  # ajusta según los modelos disponibles en tu API key
 
 
 # ---------------------------------------------------------------------------

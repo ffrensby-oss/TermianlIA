@@ -1,0 +1,22 @@
+=== REPORTE DE HARDWARE (EL MUSEO) ===
+Host: frensby@DEBFRENS
+OS: Debian GNU/Linux 13 (trixie)
+Kernel: 6.12.96+deb13-amd64
+
+CPU:
+- Modelo: Intel(R) Core(TM) i3-2328M CPU @ 2.20GHz
+- Núcleos: 4 (2 Cores / 2 Threads)
+- Arquitectura: x86_64
+- Cache L3: 3 MiB
+
+MEMORIA RAM:
+- Total: 5,7 GiB
+- Disponible: ~4,9 GiB
+- Swap: 5,9 GiB
+
+ALMACENAMIENTO:
+- Disco /: 223 GB
+- Uso: 5,4 GB (3%) - Prácticamente vacío, como el futuro de esta PC.
+
+ESTADO: Operativo, pero prehistórico.
+========================================
