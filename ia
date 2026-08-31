@@ -2,8 +2,9 @@
 
 # Si el primer argumento es --configure, ejecuta el script src/configure.py y si no ejecuta el script src/main.py
 if [ "$1" == "--configure" ]; then
-    /home/frensby/Developer/Github/TermianlIA/.venv/bin/python /home/frensby/Developer/Github/TermianlIA/src/configure.py 
+    /home/$USER/Developer/Github/TermianlIA/.venv/bin/python /home/$USER/Developer/Github/TermianlIA/src/configure.py 
+elif [ "$1" == "--telebot" ]; then
+    /home/$USER/Developer/Github/TermianlIA/.venv/bin/python /home/$USER/Developer/Github/TermianlIA/src/telebot.py
 else    
-    /home/frensby/Developer/Github/TermianlIA/.venv/bin/python /home/frensby/Developer/Github/TermianlIA/src/main.py "$@" 
+    /home/$USER/Developer/Github/TermianlIA/.venv/bin/python /home/$USER/Developer/Github/TermianlIA/src/main.py "$@" 
 fi
-
