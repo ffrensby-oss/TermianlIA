@@ -7,11 +7,11 @@ import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, CommandHandler, filters
 
-# --- Configuración ---
+# configurazione
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "PON_AQUI_TU_TOKEN")
 ALLOWED_USER_ID = int(os.environ.get("ALLOWED_USER_ID", 0))
 COMMAND_TIMEOUT = 30  # segundos
-MAX_MSG_LEN = 4000  # límite de Telegram es 4096, dejamos margen
+MAX_MSG_LEN = 4000  
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("shell_bot")
@@ -57,7 +57,6 @@ async def run_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         output = f"⚠️ Error al ejecutar el comando: {e}"
 
-    # Telegram limita la longitud de los mensajes; se divide en trozos si hace falta
     for i in range(0, len(output), MAX_MSG_LEN):
         chunk = output[i:i + MAX_MSG_LEN]
         await update.message.reply_text(f"```\n{chunk}\n```", parse_mode="MarkdownV2_disabled" if False else None)

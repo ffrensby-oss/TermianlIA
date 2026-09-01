@@ -19,7 +19,7 @@ class ConfigEditor:
         self.config_data = self.load_config()
         self.fields = {}
         self.page = None
-        self.models_column = None  # Referencia a la columna de modelos
+        self.models_column = None  
 
     def find_config_path(self):
         candidates = [
