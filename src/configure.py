@@ -51,14 +51,16 @@ class ConfigEditor:
         page.vertical_alignment = ft.MainAxisAlignment.START
         page.height = 600
         page.width = 600
+        page.fonts = {"Grate Vibes": "fonts/GrateVibes-Regular.ttf", "Playfair Display": "fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf"}
         page.resizeable = False 
 
         # Título
         title = ft.Text(
-            "EDITOR DE CONFIGURACIÓN",
+            "Editor de configuracizione",
             size=15,
             weight="bold",
             color=WHITE,
+            font_family="Grate Vibes"
         )
 
         # Contenedor de campos
@@ -211,6 +213,7 @@ class ConfigEditor:
                 weight="bold",
                 width=150,
                 color=WHITE,
+                font_family="Playfair Display",
             )
 
             field = ft.TextField(
@@ -248,6 +251,7 @@ class ConfigEditor:
             size=12,
             weight="bold",
             color=WHITE,
+            font_family="Playfair Display",
         )
 
         # Texto explicativo
@@ -256,6 +260,7 @@ class ConfigEditor:
             size=10,
             color="#CCCCCC",
             italic=True,
+            font_family="Playfair Display",
         )
 
         # Campo de texto multiline
@@ -294,6 +299,7 @@ class ConfigEditor:
                 model,
                 size=11,
                 color=BLACK if selected else WHITE,
+                font_family="Playfair Display",
             ),
             bgcolor=WHITE if selected else BLACK,
             border=border_all(WHITE),
@@ -339,6 +345,7 @@ class ConfigEditor:
             size=12,
             weight="bold",
             color=WHITE,
+            font_family="Playfair Display",
         )
 
         # Columna con altura limitada y scroll, para no crecer sin control
@@ -410,11 +417,11 @@ class ConfigEditor:
             self.page.update()
 
         # Botón para expandir/contraer
-        expand_btn_text = ft.Text("▼", size=16, color=WHITE, weight="bold")
+        expand_btn_text = ft.Text("▼", size=16, color=WHITE, weight="bold", font_family="Playfair Display")
 
         accordion_header = ft.Row(
             [
-                ft.Text("MODELOS DISPONIBLES", size=11, color=WHITE, weight="bold"),
+                ft.Text("MODELOS DISPONIBLES", size=11, color=WHITE, weight="bold", font_family="Playfair Display"),
                 ft.Text("", expand=True),
                 expand_btn_text,
             ],
@@ -433,7 +440,7 @@ class ConfigEditor:
         main_column = ft.Column([
             self.model_label,
             ft.Divider(height=8, color="transparent"),
-            ft.Text("SELECCIONA UN MODELO:", size=11, color=WHITE, weight="bold"),
+            ft.Text("SELECCIONA UN MODELO:", size=11, color=WHITE, weight="bold", font_family="Playfair Display"),
             self.model_dropdown,
             ft.Divider(height=8, color="transparent"),
             accordion_btn,
@@ -475,4 +482,4 @@ def main(page: ft.Page):
 
 
 if __name__ == "__main__":
-    ft.app(target=main)
+    ft.run(main, assets_dir="assets")
