@@ -165,12 +165,14 @@ class ConfigEditor:
                 ],
                 spacing=15,
                 expand=True,
+                scroll=ft.ScrollMode.AUTO,
             ),
             padding=20,
             expand=True,
             bgcolor=BLACK,
             border=border_all(WHITE),
             border_radius=6,
+        
         )
 
         page.add(main_container)
