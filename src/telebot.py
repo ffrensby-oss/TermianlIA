@@ -1,21 +1,4 @@
 #!/usr/bin/env python3
-"""
-Bot de Telegram personal para ejecutar comandos en tu computadora.
-
-Requisitos:
-    pip install python-telegram-bot --upgrade
-
-Configuración:
-    1. Crea un bot con @BotFather en Telegram y copia el TOKEN.
-    2. Averigua tu ID de usuario de Telegram (habla con @userinfobot).
-    3. Rellena BOT_TOKEN y ALLOWED_USER_ID abajo (o usa variables de entorno).
-
-Seguridad:
-    - Solo el ALLOWED_USER_ID puede ejecutar comandos; cualquier otro usuario
-      es ignorado. NO desactives esta comprobación: el bot ejecuta comandos
-      de shell con los permisos del usuario que corre el script.
-"""
-
 import os
 import shlex
 import subprocess

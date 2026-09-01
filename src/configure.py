@@ -49,6 +49,9 @@ class ConfigEditor:
         page.theme_mode = ft.ThemeMode.DARK
         page.bgcolor = BLACK
         page.vertical_alignment = ft.MainAxisAlignment.START
+        page.height = 600
+        page.width = 600
+        page.resizeable = False 
 
         # Título
         title = ft.Text(

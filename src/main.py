@@ -17,12 +17,10 @@ from rich.markdown import Markdown
 from tools_registry import TOOLS
 from tools_registry import FUNCTIONS
 
-# ---------------------------------------------------------------------------
-# Configuración
-# ---------------------------------------------------------------------------
+#configurazione
 
 
-# Cargar archivo de configuración JSON
+# cargar archivo de configuración json
 config_path = Path(__file__).parent / "config.json"
 if not config_path.exists():
     print(f"[bold red]Error:[/bold red] No se encontró el archivo de configuración: {config_path}")
@@ -32,14 +30,11 @@ with open(config_path, "r") as f:
     config = json.load(f)
 
 MEMORY_FILE = Path(os.environ.get("ASSISTANT_MEMORY_FILE", Path.home() / ".terminal_assistant_memory.json"))
-MAX_MEMORY_TURNS = 12          # nº de intercambios (usuario+modelo) que se conservan
-MAX_TOOL_ITERATIONS = 200        # evita loops infinitos de function-calling
-MODEL = config["model"]  # ajusta según los modelos disponibles en tu API key
+MAX_MEMORY_TURNS = 12         
+MAX_TOOL_ITERATIONS = 20
 
 
-# ---------------------------------------------------------------------------
-# Contexto del sistema
-# ---------------------------------------------------------------------------
+# System context
 def obtener_contexto_sistema() -> str:
     cmd = r"""
     OS=$(grep -oP '(?<=^PRETTY_NAME=)"?\K[^"]+' /etc/os-release 2>/dev/null || uname -sr)
@@ -59,9 +54,7 @@ def obtener_contexto_sistema() -> str:
         return f"Info del sistema no disponible ({e})"
 
 
-# ---------------------------------------------------------------------------
-# Memoria persistente (JSON externo, ya que el script no mantiene bucle)
-# ---------------------------------------------------------------------------
+#ersistencia di la memoria
 def cargar_memoria() -> list[dict]:
     if not MEMORY_FILE.exists():
         return []
@@ -75,7 +68,6 @@ def cargar_memoria() -> list[dict]:
 
 
 def guardar_memoria(turnos: list[dict]) -> None:
-    # Nos quedamos solo con los últimos N intercambios para no inflar el contexto
     recortado = turnos[-MAX_MEMORY_TURNS * 2:]
     try:
         MEMORY_FILE.write_text(
@@ -104,9 +96,7 @@ def limpiar_memoria():
     print("[green]Memoria borrada.[/green]")
 
 
-# ---------------------------------------------------------------------------
-# Ejecución de herramientas (con soporte a múltiples rondas)
-# ---------------------------------------------------------------------------
+# erramientas y ejecucion de las function calls
 def ejecutar_function_calls(candidate) -> list[types.Part]:
     partes_respuesta = []
     for part in candidate.content.parts:
@@ -134,9 +124,7 @@ def ejecutar_function_calls(candidate) -> list[types.Part]:
     return partes_respuesta
 
 
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
+#El main
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Asistente de terminal con memoria persistente."
@@ -214,9 +202,7 @@ decir "hecho"
         system_instruction=system_instruction,
     )
 
-    # -----------------------------------------------------------------
-    # Bucle de function-calling: repetimos hasta que ya no pida más tools
-    # -----------------------------------------------------------------
+    #Saatisfazione di l'utente e iterazioni multiple di strumenti
     try:
         for _ in range(MAX_TOOL_ITERATIONS):
             response = client.models.generate_content(
@@ -239,9 +225,7 @@ decir "hecho"
         print(f"[bold red]Error consultando el modelo:[/bold red] {e}")
         return
 
-    # -----------------------------------------------------------------
-    # Respuesta final en streaming
-    # -----------------------------------------------------------------
+    #streamingresponse
     texto_acumulado = ""
     try:
         with Live(Panel("", title="Respuesta"), refresh_per_second=15, auto_refresh=True) as live:
@@ -263,9 +247,7 @@ decir "hecho"
         print(f"[bold red]Error en streaming:[/bold red] {e}")
         return
 
-    # -----------------------------------------------------------------
-    # Guardar memoria (usuario + respuesta final)
-    # -----------------------------------------------------------------
+    #save memoria y la risposta finale
     if not args.no_memory and texto_acumulado.strip():
         memoria.append({"role": "user", "content": prompt_usuario, "ts": datetime.now().isoformat()})
         memoria.append({"role": "model", "content": texto_acumulado, "ts": datetime.now().isoformat()})
