@@ -190,6 +190,13 @@ class ConfigEditor:
                 self.render_model_selector(parent, data, key, value, prefix)
                 continue
 
+            full_key = f"{prefix}{key}"
+
+            # Para campos de texto largo (system_instruction), usar multiline
+            if key == "system_instruction" and isinstance(value, str) and len(value) > 200:
+                self.render_system_instruction_editor(parent, data, key, value, prefix)
+                continue
+
             # Para otros campos normales
             row = ft.Row(
                 spacing=10,
@@ -218,8 +225,64 @@ class ConfigEditor:
             row.controls.extend([label, field])
             parent.controls.append(row)
 
-            full_key = f"{prefix}{key}"
             self.fields[full_key] = (field, type(value))
+
+    def render_system_instruction_editor(self, parent, data, key, value, prefix):
+        """Renderiza un editor especial para system_instruction con área multiline"""
+        full_key = f"{prefix}{key}"
+
+        # Contenedor principal
+        container = ft.Container(
+            bgcolor=BLACK,
+            border=border_all(WHITE),
+            border_radius=6,
+            padding=10,
+            margin=5,
+        )
+
+        # Label
+        label = ft.Text(
+            key.upper(),
+            size=12,
+            weight="bold",
+            color=WHITE,
+        )
+
+        # Texto explicativo
+        info_text = ft.Text(
+            "Instrucción del sistema (texto largo)",
+            size=10,
+            color="#CCCCCC",
+            italic=True,
+        )
+
+        # Campo de texto multiline
+        field = ft.TextField(
+            value=str(value),
+            multiline=True,
+            min_lines=6,
+            max_lines=10,
+            width=370,
+            bgcolor=BLACK,
+            text_size=11,
+            color=WHITE,
+            border_color=WHITE,
+            focused_border_color=WHITE,
+            border_width=1,
+        )
+
+        # Contenedor con scroll si es necesario
+        main_column = ft.Column([
+            label,
+            info_text,
+            field,
+        ], spacing=8)
+
+        container.content = main_column
+        parent.controls.append(container)
+
+        # Guardar referencia del campo
+        self.fields[full_key] = (field, type(value))
 
     def build_model_button(self, model, data, parent, current_model):
         """Crea un botón individual para un modelo dentro del acordeón"""
