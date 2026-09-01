@@ -206,7 +206,7 @@ decir "hecho"
     try:
         for _ in range(MAX_TOOL_ITERATIONS):
             response = client.models.generate_content(
-                model=MODEL, contents=contents, config=generate_content_config
+                model=config["model"], contents=contents, config=generate_content_config
             )
             candidate = response.candidates[0]
 
@@ -230,7 +230,7 @@ decir "hecho"
     try:
         with Live(Panel("", title="Respuesta"), refresh_per_second=15, auto_refresh=True) as live:
             response_stream = client.models.generate_content_stream(
-                model=MODEL, contents=contents, config=generate_content_config
+                model=config["model"], contents=contents, config=generate_content_config
             )
             for chunk in response_stream:
                 if chunk.text:
